@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
 
-const CurrencyDropdown = ({ value, onChange }) => {
+const CurrencyDropdown = () => {
+    const { dispatch } = useContext(AppContext);
+
     const handleCurrencyChange = (event) => {
         const selectedCurrency = event.target.value;
-        const allocationCurrencyElement = document.getElementById("allocationCurrency");
-        if (allocationCurrencyElement) {
-            allocationCurrencyElement.innerHTTML = selectedCurrency;
-        }
-        onChange(event);
+        dispatch({ type: 'CHG_CURRENCY', payload: selectedCurrency });
     };
+
     return (
         <div>
-            <select className="form-select bg-success text-light" value={value} onChange={onChange}>
-                <option value="$">Currency Dollar ($)</option>
-                <option value="£">Currency Pound (£)</option>
-                <option value="€">Currency Euro (€)</option>
-                <option value="₹">Currency Rupee (₹)</option>
+            <legend>Select Currency</legend>
+            <select id="currency" className="form-select bg-success text-light" onChange={handleCurrencyChange}>
+                <option value="$">Dollar ($)</option>
+                <option value="£">Pound (£)</option>
+                <option value="€">Euro (€)</option>
+                <option value="₹">Rupee (₹)</option>
             </select>
         </div>
     );
